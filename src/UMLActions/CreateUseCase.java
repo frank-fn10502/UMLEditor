@@ -17,7 +17,5 @@ public class CreateUseCase extends MouseAdapter {
         EditArea editArea = service.gEditArea();
         service.addComponent(
                 new UseCase(editArea, e.getPoint()));
-
-        editArea.repaint();
     }
 }

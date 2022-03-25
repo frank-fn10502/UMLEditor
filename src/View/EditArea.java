@@ -19,10 +19,12 @@ public class EditArea extends JPanel {
 
     public void addEditComponent(EditComponent ec) {
         ecList.add(ec);
+        this.repaint();
     }
 
     public void removeEditComponent(EditComponent ec) {
         ecList.remove(ec);
+        this.repaint();
     }
 
     @Override

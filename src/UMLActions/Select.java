@@ -5,11 +5,12 @@ import java.util.List;
 
 import Services.*;
 import Services.EditComponentsService.StatusSelect;
+import View.EditArea;
 import View.Components.*;
 
 import java.awt.Point;
 
-public class Select extends MouseAdapter  {
+public class Select extends MouseAdapter {
     EditComponentsService service;
     View.Components.Select view;
 
@@ -20,19 +21,31 @@ public class Select extends MouseAdapter  {
 
     @Override
     public void mousePressed(MouseEvent e) {
+        EditArea editArea = service.gEditArea();
         if (service.select(e.getPoint()) == StatusSelect.NONE) {
-            // create "select view" add to Canvas
+            this.view = new View.Components.Select(editArea, e.getPoint());
+            service.addComponent(this.view);
         }
     }
 
     @Override
     public void mouseDragged(MouseEvent e) {
-        if (view != null) {
-            // "select view" change size
-            // service.getIntractComponent(new rect)
+        if (this.view != null) {
+            this.view.changeSize(e.getPoint());
+            service.select(this.view.getSelectArea());
         } else {
-            //List<BaseObj> baseObjList = service.getSelectList();
-            //baseObjList 需要更動位置
+            List<BaseObj> baseObjList = service.getSelectList();
+            for (BaseObj baseObj : baseObjList) {
+                baseObj.changeLocation(e.getPoint());
+            }
+        }
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent e) {
+        if (this.view != null){
+            service.removeComponent(this.view);
+            this.view = null;
         }
     }
 }

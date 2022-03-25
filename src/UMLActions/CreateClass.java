@@ -17,7 +17,5 @@ public class CreateClass extends MouseAdapter {
         EditArea editArea = service.gEditArea();
         service.addComponent(
                 new UMLClass(editArea, e.getPoint()));
-
-        editArea.repaint();
     }
 }

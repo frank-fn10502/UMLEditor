@@ -27,6 +27,6 @@ public abstract class EditComponent {
      * 移除加入 container 的 component, 在銷毀這一 class 前需要先呼叫。
      */
     public void destoryEntity() {
-        System.out.println("remove swing component from Container");
+        //System.out.println("remove swing component from Container");
     }
 }

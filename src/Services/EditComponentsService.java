@@ -38,37 +38,75 @@ public class EditComponentsService {
     }
 
     public void clearSelectList() {
+        for (BaseObj baseObj : selectList) {
+            baseObj.showAnchorPoints(false);
+        }
         this.selectList.clear();
     }
 
-    public StatusSelect select(Point point) {
+    public StatusSelect select(Point p) {
         if (selectList.size() > 0) {
-            // if 從 selectList 找到一個符合的
-            // return SELECTED
-            //  else
-            // clear selectList
+            if (this.isSelected(p))
+                return StatusSelect.IS_SELECTED;
+
+            this.clearSelectList();
         }
-        // if 從 baseObjList 找到一個符合的
-        // 加到 select list
-        // return NEWONE
+        if (trySelect(p))
+            return StatusSelect.NEW_ONE;
 
         return StatusSelect.NONE;
     }
 
     public StatusSelect select(Rectangle rect) {
-        // 套用 IOU 算法 找出所有相交的 baseObj
-        // if 從 baseObjList 找到一個符合的
-        // return NEWONE
+        if (this.trySelect(rect))
+            return StatusSelect.NEW_ONE;
+
         return StatusSelect.NONE;
     }
 
     public void addComponent(EditComponent ec) {
         editArea.addEditComponent(ec);
-        // 這邊要判斷是否是 basicObj ? 用 isInstance
+        if (ec instanceof BaseObj) {
+            baseObjList.add((BaseObj) ec);
+        }
     }
 
     public void removeComponent(EditComponent ec) {
         editArea.removeEditComponent(ec);
         ec.destoryEntity();
+    }
+
+    boolean isSelected(Point p) {
+        for (BaseObj s : selectList) {
+            if (s.isInteract(p))
+                return true;
+        }
+        return false;
+    }
+
+    boolean trySelect(Point p) {
+        for (BaseObj baseObj : baseObjList) {
+            if (baseObj.isInteract(p)) {
+                this.addToSelectList(baseObj);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    boolean trySelect(Rectangle rect) {
+        boolean result = false;
+        for (BaseObj baseObj : baseObjList) {
+            if (baseObj.isInteract(rect)) {
+                this.addToSelectList(baseObj);
+                result = true;
+            }
+        }
+        return result;
+    }
+
+    void addToSelectList(BaseObj item) {
+        this.selectList.add(item);
+        item.showAnchorPoints(true);
     }
 }

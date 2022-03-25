@@ -13,6 +13,6 @@ public class App {
         actionCollection.CreateClass = new CreateClass(ECservice);
         actionCollection.CreateUseCase = new CreateUseCase(ECservice);
 
-        new UMLEditorController(frame, actionCollection);
+        new UMLEditorController(frame, actionCollection, ECservice);
     }
 }
