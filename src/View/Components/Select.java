@@ -2,8 +2,6 @@ package View.Components;
 
 import java.awt.*;
 
-import utils.Points;
-
 public class Select extends EditComponent {
 
     Point startLoc, endLoc;

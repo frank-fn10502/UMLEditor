@@ -1,4 +1,4 @@
-package UMLActions;
+package Services.UMLActions;
 
 import java.awt.event.*;
 import java.util.List;
@@ -7,8 +7,6 @@ import Services.*;
 import Services.EditComponentsService.StatusSelect;
 import View.EditArea;
 import View.Components.*;
-
-import java.awt.Point;
 
 public class Select extends MouseAdapter {
     EditComponentsService service;

@@ -1,6 +1,6 @@
 import Controller.UMLEditorController;
 import Services.*;
-import UMLActions.*;
+import Services.UMLActions.*;
 import View.*;
 
 public class App {

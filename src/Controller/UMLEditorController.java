@@ -2,12 +2,9 @@ package Controller;
 
 import Services.*;
 import Test.Listeners.EditAreaMouseListener;
-import UMLActions.*;
 import View.UMLFrame;
 import java.awt.*;
 import java.awt.event.*;
-
-import javax.swing.JPanel;
 
 public class UMLEditorController {
 

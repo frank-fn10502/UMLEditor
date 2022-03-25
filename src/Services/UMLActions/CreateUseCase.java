@@ -1,14 +1,14 @@
-package UMLActions;
+package Services.UMLActions;
 
 import java.awt.event.*;
 import Services.*;
 import View.EditArea;
 import View.Components.*;
 
-public class CreateClass extends MouseAdapter {
+public class CreateUseCase extends MouseAdapter {
     EditComponentsService service;
 
-    public CreateClass(EditComponentsService service) {
+    public CreateUseCase(EditComponentsService service) {
         this.service = service;
     }
 
@@ -16,6 +16,6 @@ public class CreateClass extends MouseAdapter {
     public void mousePressed(MouseEvent e) {
         EditArea editArea = service.gEditArea();
         service.addComponent(
-                new UMLClass(editArea, e.getPoint()));
+                new UseCase(editArea, e.getPoint()));
     }
 }
