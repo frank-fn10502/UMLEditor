@@ -9,7 +9,7 @@ import View.Components.*;
 
 import java.awt.Point;
 
-public class Select implements MouseListener, MouseMotionListener {
+public class Select extends MouseAdapter  {
     EditComponentsService service;
     View.Components.Select view;
 
@@ -34,26 +34,5 @@ public class Select implements MouseListener, MouseMotionListener {
             //List<BaseObj> baseObjList = service.getSelectList();
             //baseObjList 需要更動位置
         }
-    }
-
-    @Override
-    public void mouseReleased(MouseEvent e) {
-        // service remove view than view = null;
-    }
-
-    @Override
-    public void mouseMoved(MouseEvent e) {
-    }
-
-    @Override
-    public void mouseClicked(MouseEvent e) {
-    }
-
-    @Override
-    public void mouseEntered(MouseEvent e) {
-    }
-
-    @Override
-    public void mouseExited(MouseEvent e) {
     }
 }
