@@ -53,6 +53,18 @@ public class UMLEditorController {
             service.clearSelectList();
             new ListenerHelper().addListener(this.frame.editArea, collection.CreateUseCase);
         });
+        frame.btnAL.addActionListener(e -> {
+            service.clearSelectList();
+            new ListenerHelper().addListener(this.frame.editArea, collection.Association);
+        });
+        frame.btnGL.addActionListener(e -> {
+            service.clearSelectList();
+            new ListenerHelper().addListener(this.frame.editArea, collection.Generalization);
+        });
+        frame.btnCL.addActionListener(e -> {
+            service.clearSelectList();
+            new ListenerHelper().addListener(this.frame.editArea, collection.Composition);
+        });
     }
 
 }

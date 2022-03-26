@@ -44,6 +44,15 @@ public class EditComponentsService {
         this.selectList.clear();
     }
 
+    public BaseObj getIntraComponent(Point p){
+        for (BaseObj item : baseObjList) {
+            if(item.isInteract(p)){
+                return item;
+            }
+        }
+        return null;
+    }
+
     public StatusSelect select(Point p) {
         if (selectList.size() > 0) {
             if (this.isSelected(p))

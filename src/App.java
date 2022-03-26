@@ -12,6 +12,9 @@ public class App {
         actionCollection.Select = new Select(ECservice);
         actionCollection.CreateClass = new CreateClass(ECservice);
         actionCollection.CreateUseCase = new CreateUseCase(ECservice);
+        actionCollection.Association = new CreateAssociation(ECservice);
+        actionCollection.Generalization = new CreateGeneralization(ECservice);
+        actionCollection.Composition = new CreateComposition(ECservice);
 
         new UMLEditorController(frame, actionCollection, ECservice);
     }
