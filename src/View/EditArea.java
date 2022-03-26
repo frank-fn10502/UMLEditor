@@ -12,8 +12,11 @@ import java.awt.*;
 public class EditArea extends JPanel {
     List<EditComponent> ecList;
 
-    public EditArea() {
+    public EditArea(Rectangle loc_size) {
         super();
+
+        setJpanelValue(loc_size);
+
         ecList = new ArrayList<EditComponent>();
     }
 
@@ -25,6 +28,11 @@ public class EditArea extends JPanel {
     public void removeEditComponent(EditComponent ec) {
         ecList.remove(ec);
         this.repaint();
+    }
+
+    void setJpanelValue(Rectangle loc_size) {
+        this.setBounds(loc_size);
+        this.setBorder(BorderFactory.createLineBorder(Color.black));
     }
 
     @Override
