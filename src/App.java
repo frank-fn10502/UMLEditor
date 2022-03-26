@@ -1,4 +1,4 @@
-import Controller.UMLEditorController;
+import Controller.EditorAreaController;
 import Services.*;
 import Services.UMLActions.*;
 import View.*;
@@ -16,6 +16,6 @@ public class App {
         actionCollection.Generalization = new CreateGeneralization(ECservice);
         actionCollection.Composition = new CreateComposition(ECservice);
 
-        new UMLEditorController(frame, actionCollection, ECservice);
+        new EditorAreaController(frame, actionCollection, ECservice);
     }
 }

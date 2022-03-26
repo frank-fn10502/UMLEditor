@@ -1,12 +1,11 @@
 package Controller;
 
 import Services.*;
-import Test.Listeners.EditAreaMouseListener;
 import View.UMLFrame;
 import java.awt.*;
 import java.awt.event.*;
 
-public class UMLEditorController {
+public class EditorAreaController {
 
     class ListenerHelper {
         public void addListener(Container c, MouseAdapter action) {
@@ -27,7 +26,7 @@ public class UMLEditorController {
     MouseAdapter preMethod;
     EditComponentsService service;
 
-    public UMLEditorController(UMLFrame frame, ActionsServices collection, EditComponentsService service) {
+    public EditorAreaController(UMLFrame frame, ActionsServices collection, EditComponentsService service) {
         super();
         this.frame = frame;
         this.collection = collection;
