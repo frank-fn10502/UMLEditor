@@ -56,10 +56,10 @@ public class BaseObj extends EditComponent {
             int midY = loc.y + height / 2;
             int halfW = this.width / 2;
 
-            this.north = new Anchor(new Point(midX - halfW, loc.y - this.width), new Point(midX - halfW, loc.y));
-            this.east = new Anchor(new Point(x2, midY - halfW), new Point(x2, midY - halfW));
-            this.south = new Anchor(new Point(midX - halfW, y2), new Point(midX - halfW, y2));
-            this.west = new Anchor(new Point(loc.x - this.width, midY - halfW), new Point(loc.x, midY - halfW));
+            this.north = new Anchor(new Point(midX - halfW, loc.y - this.width), new Point(midX, loc.y));
+            this.east = new Anchor(new Point(x2, midY - halfW), new Point(x2, midY));
+            this.south = new Anchor(new Point(midX - halfW, y2), new Point(midX, y2));
+            this.west = new Anchor(new Point(loc.x - this.width, midY - halfW), new Point(loc.x, midY));
 
             this.apList = new ArrayList<Anchor>();
             apList.add(this.north);
