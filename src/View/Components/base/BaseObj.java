@@ -1,4 +1,4 @@
-package View.Components;
+package View.Components.base;
 
 import java.awt.*;
 import java.util.ArrayList;

@@ -3,7 +3,8 @@ package View;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.*;
-import View.Components.*;
+
+import View.Components.base.*;
 import java.awt.*;
 
 /**

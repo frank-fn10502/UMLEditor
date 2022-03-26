@@ -3,9 +3,9 @@ package Services.UMLActions;
 import java.awt.*;
 import java.awt.event.*;
 import Services.*;
-import View.Components.*;
+import View.Components.base.BaseObj;
 
-public class CreateRelation<T extends View.Components.Relation> extends MouseAdapter {
+public class CreateRelation<T extends View.Components.base.Relation> extends MouseAdapter {
     EditComponentsService service;
     BaseObj objStart;
     T view;

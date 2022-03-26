@@ -3,7 +3,7 @@ package Services;
 import java.util.*;
 
 import View.EditArea;
-import View.Components.*;
+import View.Components.base.*;
 import java.awt.Point;
 import java.awt.Rectangle;
 

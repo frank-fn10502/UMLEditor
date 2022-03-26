@@ -1,7 +1,7 @@
 package Services.UMLActions;
 
 import Services.EditComponentsService;
-import View.Components.CompositionLine;
+import View.Components.*;
 
 public class CreateComposition extends CreateRelation<CompositionLine> {
 

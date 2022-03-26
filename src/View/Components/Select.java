@@ -1,6 +1,7 @@
 package View.Components;
 
 import java.awt.*;
+import View.Components.base.*;
 
 public class Select extends EditComponent {
 
