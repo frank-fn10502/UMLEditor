@@ -6,14 +6,25 @@ import java.util.List;
 
 public class BaseObj extends EditComponent {
     protected class AnchorPoints {
+        class Anchor {
+            public Point loc;
+            public Point attach;
+
+            public Anchor(Point loc, Point attach) {
+                this.loc = loc;
+                this.attach = attach;
+            }
+        }
+
         public boolean visable;
         public int width;
 
-        Point north;
-        Point east;
-        Point west;
-        Point south;
-        List<Point> aps;
+        Anchor north;
+        Anchor east;
+        Anchor west;
+        Anchor south;
+
+        List<Anchor> apList;
 
         public AnchorPoints(Point loc, int width, int height) {
             this.visable = false;
@@ -23,19 +34,19 @@ public class BaseObj extends EditComponent {
         }
 
         public Point getNorth() {
-            return north;
+            return north.loc;
         }
 
         public Point getEast() {
-            return east;
+            return east.loc;
         }
 
         public Point getWest() {
-            return west;
+            return west.loc;
         }
 
         public Point getSouth() {
-            return south;
+            return south.loc;
         }
 
         public void initPoints(Point loc, int width, int height) {
@@ -45,36 +56,38 @@ public class BaseObj extends EditComponent {
             int midY = loc.y + height / 2;
             int halfW = this.width / 2;
 
-            this.north = new Point(midX - halfW, loc.y - this.width);
-            this.east = new Point(x2, midY - halfW);
-            this.south = new Point(midX - halfW, y2);
-            this.west = new Point(loc.x - this.width, midY - halfW);
+            this.north = new Anchor(new Point(midX - halfW, loc.y - this.width), new Point(midX - halfW, loc.y));
+            this.east = new Anchor(new Point(x2, midY - halfW), new Point(x2, midY - halfW));
+            this.south = new Anchor(new Point(midX - halfW, y2), new Point(midX - halfW, y2));
+            this.west = new Anchor(new Point(loc.x - this.width, midY - halfW), new Point(loc.x, midY - halfW));
 
-            this.aps = new ArrayList<Point>();
-            aps.add(this.north);
-            aps.add(this.east);
-            aps.add(this.south);
-            aps.add(this.west);
+            this.apList = new ArrayList<Anchor>();
+            apList.add(this.north);
+            apList.add(this.east);
+            apList.add(this.south);
+            apList.add(this.west);
 
         }
 
         public Point getNearestAnchorPoint(Point p) {
             Point minDistPoint = null;
             int minDist = 10000;
-            for (Point point : aps) {
-                int dist = Math.abs(p.x - point.x) + Math.abs(p.y - point.y);
+            for (Anchor a : apList) {
+                int dist = Math.abs(p.x - a.attach.x) + Math.abs(p.y - a.attach.y);
                 if (dist < minDist) {
                     minDist = dist;
-                    minDistPoint = point;
+                    minDistPoint = a.attach;
                 }
             }
             return minDistPoint;
         }
 
         public void changePosition(int w, int h) {
-            for (Point point : aps) {
-                point.x += w;
-                point.y += h;
+            for (Anchor anchor : apList) {
+                anchor.loc.x += w;
+                anchor.loc.y += h;
+                anchor.attach.x += w;
+                anchor.attach.y += h;
             }
         }
     }
