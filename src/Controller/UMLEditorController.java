@@ -32,36 +32,40 @@ public class UMLEditorController {
         this.frame = frame;
         this.collection = collection;
         this.service = service;
+
+        setDefaultAction();
+        bindButtonClick();
+    }
+    void setDefaultAction(){
         this.preMethod = collection.Select;
 
+        this.frame.sideBar.setCurrentClicked(this.frame.sideBar.btnSelect);
         this.frame.editArea.addMouseListener(collection.Select);
         this.frame.editArea.addMouseMotionListener(collection.Select);
-
-        bindButtonClick();
     }
 
     // 透過 btn onclick event 更換 Listener 以達到變更 Action 的實作
     void bindButtonClick() {
-        frame.btnSelect.addActionListener(e -> {
+        this.frame.sideBar.btnSelect.addActionListener(e -> {
             new ListenerHelper().addListener(this.frame.editArea, collection.Select);
         });
-        frame.btnCreateClass.addActionListener(e -> {
+        this.frame.sideBar.btnCreateClass.addActionListener(e -> {
             service.clearSelectList();
             new ListenerHelper().addListener(this.frame.editArea, collection.CreateClass);
         });
-        frame.btnCreateUseCase.addActionListener(e -> {
+        this.frame.sideBar.btnCreateUseCase.addActionListener(e -> {
             service.clearSelectList();
             new ListenerHelper().addListener(this.frame.editArea, collection.CreateUseCase);
         });
-        frame.btnAL.addActionListener(e -> {
+        this.frame.sideBar.btnAL.addActionListener(e -> {
             service.clearSelectList();
             new ListenerHelper().addListener(this.frame.editArea, collection.Association);
         });
-        frame.btnGL.addActionListener(e -> {
+        this.frame.sideBar.btnGL.addActionListener(e -> {
             service.clearSelectList();
             new ListenerHelper().addListener(this.frame.editArea, collection.Generalization);
         });
-        frame.btnCL.addActionListener(e -> {
+        this.frame.sideBar.btnCL.addActionListener(e -> {
             service.clearSelectList();
             new ListenerHelper().addListener(this.frame.editArea, collection.Composition);
         });
