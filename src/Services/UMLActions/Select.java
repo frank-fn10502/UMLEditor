@@ -1,5 +1,6 @@
 package Services.UMLActions;
 
+import java.awt.*;
 import java.awt.event.*;
 import java.util.List;
 
@@ -11,6 +12,7 @@ import View.Components.*;
 public class Select extends MouseAdapter {
     EditComponentsService service;
     View.Components.Select view;
+    Point locStart;
 
     public Select(EditComponentsService service) {
         this.service = service;
@@ -20,8 +22,9 @@ public class Select extends MouseAdapter {
     @Override
     public void mousePressed(MouseEvent e) {
         EditArea editArea = service.gEditArea();
-        if (service.select(e.getPoint()) == StatusSelect.NONE) {
-            this.view = new View.Components.Select(editArea, e.getPoint());
+        this.locStart = e.getPoint();
+        if (service.select(locStart) == StatusSelect.NONE) {
+            this.view = new View.Components.Select(editArea, locStart);
             service.addComponent(this.view);
         }
     }
@@ -31,19 +34,29 @@ public class Select extends MouseAdapter {
         if (this.view != null) {
             this.view.changeSize(e.getPoint());
             service.select(this.view.getSelectArea());
-        } else {
+            return;
+        }
+
+        Point dir = this.getMoveDir(e.getPoint());
+        if (dir.x != 0 || dir.y != 0) {
             List<BaseObj> baseObjList = service.getSelectList();
-            for (BaseObj baseObj : baseObjList) {
-                baseObj.changeLocation(e.getPoint());
+
+            for (BaseObj item : baseObjList) {
+                item.changeLocation(dir.x, dir.y);
             }
+            this.locStart = e.getPoint();
         }
     }
 
     @Override
     public void mouseReleased(MouseEvent e) {
-        if (this.view != null){
+        if (this.view != null) {
             service.removeComponent(this.view);
             this.view = null;
         }
+    }
+
+    Point getMoveDir(Point p) {
+        return new Point(p.x - this.locStart.x, p.y - this.locStart.y);
     }
 }

@@ -38,8 +38,8 @@ public class EditComponentsService {
     }
 
     public void clearSelectList() {
-        for (BaseObj baseObj : selectList) {
-            baseObj.showAnchorPoints(false);
+        for (BaseObj item : selectList) {
+            item.showAnchorPoints(false);
         }
         this.selectList.clear();
     }
@@ -85,9 +85,9 @@ public class EditComponentsService {
     }
 
     boolean trySelect(Point p) {
-        for (BaseObj baseObj : baseObjList) {
-            if (baseObj.isInteract(p)) {
-                this.addToSelectList(baseObj);
+        for (BaseObj item : baseObjList) {
+            if (item.isInteract(p)) {
+                this.addToSelectList(item);
                 return true;
             }
         }
@@ -96,9 +96,9 @@ public class EditComponentsService {
 
     boolean trySelect(Rectangle rect) {
         boolean result = false;
-        for (BaseObj baseObj : baseObjList) {
-            if (baseObj.isInteract(rect)) {
-                this.addToSelectList(baseObj);
+        for (BaseObj item : baseObjList) {
+            if (item.isInteract(rect)) {
+                this.addToSelectList(item);
                 result = true;
             }
         }
@@ -106,7 +106,10 @@ public class EditComponentsService {
     }
 
     void addToSelectList(BaseObj item) {
-        this.selectList.add(item);
-        item.showAnchorPoints(true);
+        if(!this.selectList.contains(item))
+        {
+            this.selectList.add(item);
+            item.showAnchorPoints(true);
+        }
     }
 }

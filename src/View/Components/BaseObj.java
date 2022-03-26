@@ -125,11 +125,9 @@ public class BaseObj extends EditComponent {
         container.repaint();
     }
 
-    public void changeLocation(Point newLoc) {
-        int w = newLoc.x - this.location.x;
-        int h = newLoc.y - this.location.y;
-
-        this.location = newLoc;
+    public void changeLocation(int w, int h) {
+        this.location.x += w;
+        this.location.y += h;
         this.aps.changePosition(w, h);
         container.repaint();
     }
