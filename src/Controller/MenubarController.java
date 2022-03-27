@@ -14,8 +14,9 @@ public class MenubarController {
     UMLMenuBar menubar;
     EditComponentsService service;
     List<UMLContainer> containerList;
+    UMLContainer root;
     List<Entity> entityList;
-    Composite view;
+    // Composite view;
 
     public MenubarController(UMLMenuBar menubar, EditComponentsService service) {
         this.menubar = menubar;
@@ -31,10 +32,10 @@ public class MenubarController {
             boolean only_one = e.size() == 1;
             boolean more_than_two = e.size() >= 2;
             boolean have_container = this.containerList.size() > 0;
-            boolean onlyGroup = this.noCompositeContains(e);
+            boolean onlyOneRootGroup = this.onlyOneCompositeContains(e);
 
             this.menubar.EnabledMethodGroup(more_than_two);
-            this.menubar.EnabledMethodUnGroupObj(onlyGroup && have_container);
+            this.menubar.EnabledMethodUnGroupObj(onlyOneRootGroup && have_container);
             this.menubar.EnabledMethodChangeObjName(only_one);
 
             this.containerList.forEach(item -> {
@@ -44,13 +45,17 @@ public class MenubarController {
         this.bindListener();
     }
 
-    boolean noCompositeContains(List<BaseObj> list){
-        for (BaseObj baseObj : list) {
-            if(baseObj.getParent() == null){
+    boolean onlyOneCompositeContains(List<BaseObj> list) {
+        List<UMLContainer> containerList = new ArrayList<UMLContainer>();
+        for (BaseObj item : list) {
+            if (item.getParent() == null) {
                 return false;
+            } else {
+                this.root = this.findRootParent(item);
+                containerList.add(this.root);
             }
         }
-        return true;
+        return containerList.size() == 1 ? true : false;
     }
 
     void setContainerList(List<BaseObj> list) {
@@ -59,7 +64,7 @@ public class MenubarController {
         for (BaseObj item : list) {
             if (item.getParent() == null) {
                 this.entityList.add(item);
-            } else if (item.getParent() != null) {
+            } else {
                 UMLContainer root = this.addParentUntilRoot(item);
                 this.entityList.add(root);
                 this.addChiledComposite(root);
@@ -67,21 +72,26 @@ public class MenubarController {
         }
     }
 
-    UMLContainer addParentUntilRoot(BaseObj item) {
+    UMLContainer findRootParent(BaseObj item) {
         UMLContainer root = null;
         for (UMLContainer p = item.getParent(); p != null; p = p.getParent()) {
             if (!this.containerList.contains(p.getParent())) {
-                this.containerList.add(p);
                 root = p;
             }
         }
         return root;
     }
 
+    UMLContainer addParentUntilRoot(BaseObj item) {
+        UMLContainer root = this.findRootParent(item);
+        this.containerList.add(root);
+        return root;
+    }
+
     void addChiledComposite(UMLContainer c) {
         for (Entity item : ((Composite) c).getEntityList()) {
             if (item instanceof Composite) {
-                this.containerList.add((Composite)item);
+                this.containerList.add((Composite) item);
             }
         }
     }
@@ -96,18 +106,20 @@ public class MenubarController {
         });
         this.menubar.setGroupListener(e -> {
             try {
-                this.view = new Composite(service.gEditArea(), this.entityList);
-                this.service.addComponent(this.view);
+                UMLContainer c = new Composite(service.gEditArea(), this.entityList);
+                this.service.addComponent(c);
 
-                this.containerList.add(this.view);
+                this.containerList.add(c);
                 this.menubar.EnabledMethodUnGroupObj(true);
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
         });
         this.menubar.setUnGroupObjListener(e -> {
-            this.service.removeComponent(this.view);
-            this.view = null;
+            this.service.removeComponent(this.root);
+            this.containerList.remove(this.root);
+            this.root = this.containerList.size() == 1 ? this.containerList.get(0) : null;
+            this.menubar.EnabledMethodUnGroupObj(this.root != null);
         });
     }
 }
