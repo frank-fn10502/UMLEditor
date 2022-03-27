@@ -1,7 +1,9 @@
 package View;
 
 import java.awt.*;
+import java.io.IOException;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 
 import View.Buttons.UMLButton;
@@ -10,7 +12,7 @@ public class SideBar extends JPanel {
     UMLButton btnClicked;
     public UMLButton btnSelect, btnAL, btnGL, btnCL, btnCreateClass, btnCreateUseCase;
 
-    public SideBar(Rectangle loc_size) {
+    public SideBar(Rectangle loc_size) throws IOException {
         super();
 
         setPanelValue(loc_size);
@@ -25,29 +27,35 @@ public class SideBar extends JPanel {
             this.btnClicked = btn;
             return;
         }
+        if(this.btnClicked == btn){
+            return;
+        }
         this.btnClicked.setNormal();
         this.btnClicked = btn;
     }
 
-    UMLButton createBtn(String text, int y) {
-        UMLButton btn = new UMLButton(text);
+    UMLButton createBtn(String path, int y) {
+        UMLButton btn = new UMLButton();
         btn.setBounds(0, y, this.getWidth(), this.getWidth());
+        btn.setImage(path);
 
         return btn;
     }
-    void setPanelValue(Rectangle r){
+
+    void setPanelValue(Rectangle r) {
         this.setBounds(r);
         this.setLayout(null);
     }
-    void createBtns() {
+
+    void createBtns() throws IOException {
         int gap = 10;
         int start = 0, i = this.getWidth() + gap;
-        btnSelect = createBtn("select", start);
-        btnAL = createBtn("AL", start += i);
-        btnGL = createBtn("GL", start += i);
-        btnCL = createBtn("CL", start += i);
-        btnCreateClass = createBtn("class", start += i);
-        btnCreateUseCase = createBtn("use case", start += i);
+        btnSelect = createBtn("/images/select.png", start);
+        btnAL = createBtn("/images/AL.png", start += i);
+        btnGL = createBtn("/images/GL.png", start += i);
+        btnCL = createBtn("/images/CL.png", start += i);
+        btnCreateClass = createBtn("/images/class.png", start += i);
+        btnCreateUseCase = createBtn("/images/use_case.png", start += i);
 
         this.add(btnSelect);
         this.add(btnAL);

@@ -43,7 +43,7 @@ public class Select extends EditComponent {
         Rectangle r = this.getArea();
 
         Graphics2D g2 = (Graphics2D) g;
-        g2.setColor(Color.blue);
+        g2.setColor(new Color(18, 70, 86, 30));
         g2.fillRect(r.x, r.y, r.width, r.height);
     }
 

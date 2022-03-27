@@ -1,6 +1,7 @@
 package View.Components;
 
 import java.awt.*;
+import javax.swing.*;
 import View.Components.base.*;
 
 public class UMLClass extends BaseObj {
@@ -16,13 +17,25 @@ public class UMLClass extends BaseObj {
         super.draw(g);
 
         Graphics2D g2 = (Graphics2D) g;
+        g2.setStroke(new BasicStroke(2));
         g2.setColor(Color.black);
-        g2.draw(this.location.x, this.location.y, this.width, this.height);
+        g2.drawRect(this.location.x, this.location.y, this.width, this.height);
         g2.setColor(Color.gray);
         g2.fillRect(this.location.x, this.location.y, this.width, this.height);
-        
-        //TODO draw text
+
+        int x1 = this.location.x;
+        int x2 = this.location.x + this.width;
+        int yGap = this.height / 3;
         g2.setColor(Color.black);
-        g2.drawString(this.name, this.location.x, this.location.y);
+        g2.drawLine(x1, this.location.y + yGap, x2, this.location.y + yGap);
+        g2.drawLine(x1, this.location.y + yGap * 2, x2, this.location.y + yGap * 2);
+
+        Font f = g2.getFont().deriveFont(12.0f);
+        Rectangle textArea = new Rectangle(this.location.x, this.location.y, this.width, this.height / 3);
+        g2.setFont(f);
+        g2.setColor(Color.black);
+        this.drawCenteredString(g2, this.name, textArea, f);
     }
+
+
 }

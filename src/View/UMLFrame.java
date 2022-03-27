@@ -1,6 +1,8 @@
 package View;
 
 import java.awt.*;
+import java.io.IOException;
+
 import javax.swing.*;
 
 public class UMLFrame extends JFrame {
@@ -8,16 +10,16 @@ public class UMLFrame extends JFrame {
     public SideBar sideBar;
     public UMLMenuBar menubar;
 
-    public UMLFrame() {
+    public UMLFrame() throws IOException {
         super();
         setFrameValue();
 
         // create sideBar
-        Rectangle loc_size = new Rectangle(10, 10, 100, 670);
+        Rectangle loc_size = new Rectangle(10, 10, 100, 680);
         this.sideBar = new SideBar(loc_size);
 
         // create EditArea
-        loc_size = new Rectangle(sideBar.getWidth() + sideBar.getX() + 10, 10, 1150, 670);
+        loc_size = new Rectangle(sideBar.getWidth() + sideBar.getX() + 10, 10, 1150, 680);
         this.editArea = new EditArea(loc_size);
 
         // create menubar
