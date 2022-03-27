@@ -4,7 +4,7 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BaseObj extends EditComponent {
+public class BaseObj extends Entity {
     protected class AnchorPoints {
         class Anchor {
             public Point loc;
@@ -28,7 +28,7 @@ public class BaseObj extends EditComponent {
 
         public AnchorPoints(Point loc, int width, int height) {
             this.visable = false;
-            this.width = 10;
+            this.width = 5;
 
             this.initPoints(loc, width, height);
         }
@@ -93,35 +93,26 @@ public class BaseObj extends EditComponent {
     }
 
     protected AnchorPoints aps;
-    protected Point location;
-
-    protected int width, height;
+    protected String name;
 
     public BaseObj(Container c, Point loc) {
         this(c, loc, 75, 100);
     }
 
     public BaseObj(Container c, Point loc, int width, int height) {
-        super(c);
-
-        this.initLocation(loc, width, height);
-    }
-
-    void initLocation(Point loc, int width, int height) {
-        this.location = loc;
-
-        this.width = width;
-        this.height = height;
+        super(c, loc, width, height);
 
         this.aps = new AnchorPoints(loc, width, height);
+        this.name = "baseObj";
+        this.depth = 90;
     }
 
-    protected void setAnchors(Graphics g) {
+    protected void drawAnchors(Graphics g) {
         if (!this.aps.visable)
             return;
         int w = this.aps.width;
 
-        g.setColor(Color.green);
+        g.setColor(Color.black);
         g.fillRect(this.aps.getNorth().x, this.aps.getNorth().y, w, w);
         g.fillRect(this.aps.getEast().x, this.aps.getEast().y, w, w);
         g.fillRect(this.aps.getSouth().x, this.aps.getSouth().y, w, w);
@@ -130,7 +121,7 @@ public class BaseObj extends EditComponent {
 
     @Override
     public void draw(Graphics g) {
-        this.setAnchors(g);
+        this.drawAnchors(g);
     }
 
     public void showAnchorPoints(boolean show) {
@@ -138,43 +129,19 @@ public class BaseObj extends EditComponent {
         container.repaint();
     }
 
+    @Override
     public void changeLocation(int w, int h) {
-        this.location.x += w;
-        this.location.y += h;
+        super.changeLocation(w, h);
         this.aps.changePosition(w, h);
+        container.repaint();
+    }
+
+    public void setName(String name) {
+        this.name = name;
         container.repaint();
     }
 
     public Point getNearestAnchorPoint(Point p) {
         return this.aps.getNearestAnchorPoint(p);
-    }
-
-    public boolean isInteract(Point p) {
-        int x1 = this.location.x;
-        int x2 = this.location.x + this.width;
-        int y1 = this.location.y;
-        int y2 = this.location.y + this.height;
-
-        if (p.x <= x2 && p.x >= x1 &&
-                p.y <= y2 && p.y >= y1) {
-            return true;
-        }
-        return false;
-    }
-
-    public boolean isInteract(Rectangle rect) {
-        int x1 = this.location.x;
-        int x2 = this.location.x + this.width;
-        int y1 = this.location.y;
-        int y2 = this.location.y + this.height;
-
-        int w = 0, h = 0;
-        w = Math.min(x2, rect.x + rect.width) - Math.max(x1, rect.x);
-        h = Math.min(y2, rect.y + rect.height) - Math.max(y1, rect.y);
-
-        if (w < 0 || h < 0)
-            return false;
-
-        return true;
     }
 }

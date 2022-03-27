@@ -23,11 +23,17 @@ public class EditArea extends JPanel {
 
     public void addEditComponent(EditComponent ec) {
         ecList.add(ec);
+        ecList.sort((i1, i2) -> i2.getDepth() - i1.getDepth());
         this.repaint();
     }
 
     public void removeEditComponent(EditComponent ec) {
         ecList.remove(ec);
+        this.repaint();
+    }
+
+    public void sortComponent(){
+        ecList.sort((i1, i2) -> i2.getDepth() - i1.getDepth());
         this.repaint();
     }
 

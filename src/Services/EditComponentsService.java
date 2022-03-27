@@ -18,15 +18,23 @@ public class EditComponentsService {
         NEW_ONE
     }
 
+    public interface SelectEventListener extends EventListener {
+        void actionPerformed(List<BaseObj> selectList);
+    }
+
     EditArea editArea;
 
     List<BaseObj> baseObjList;
     List<BaseObj> selectList;
 
+    List<SelectEventListener> selectEventList;
+
     public EditComponentsService(EditArea editArea) {
         this.editArea = editArea;
         this.baseObjList = new ArrayList<BaseObj>();
         this.selectList = new ArrayList<BaseObj>();
+
+        this.selectEventList = new ArrayList<SelectEventListener>();
     }
 
     public EditArea gEditArea() {
@@ -40,13 +48,16 @@ public class EditComponentsService {
     public void clearSelectList() {
         for (BaseObj item : selectList) {
             item.showAnchorPoints(false);
+            item.setDepth(90);
+            this.editArea.sortComponent();
         }
         this.selectList.clear();
+        this.notifyAllListener();
     }
 
-    public BaseObj getIntraComponent(Point p){
+    public BaseObj getIntraComponent(Point p) {
         for (BaseObj item : baseObjList) {
-            if(item.isInteract(p)){
+            if (item.isInteract(p)) {
                 return item;
             }
         }
@@ -77,12 +88,21 @@ public class EditComponentsService {
         editArea.addEditComponent(ec);
         if (ec instanceof BaseObj) {
             baseObjList.add((BaseObj) ec);
+            return;
         }
     }
 
     public void removeComponent(EditComponent ec) {
         editArea.removeEditComponent(ec);
         ec.destoryEntity();
+    }
+
+    public void addSelectEventListener(SelectEventListener listener) {
+        this.selectEventList.add(listener);
+    }
+
+    public void removeSelectEventListener(SelectEventListener listener) {
+        this.selectEventList.add(listener);
     }
 
     boolean isSelected(Point p) {
@@ -115,10 +135,18 @@ public class EditComponentsService {
     }
 
     void addToSelectList(BaseObj item) {
-        if(!this.selectList.contains(item))
-        {
+        if (!this.selectList.contains(item)) {
             this.selectList.add(item);
+            this.notifyAllListener();
             item.showAnchorPoints(true);
+            item.setDepth(0);
+            this.editArea.sortComponent();
+        }
+    }
+
+    void notifyAllListener() {
+        for (SelectEventListener listener : selectEventList) {
+            listener.actionPerformed(this.selectList);
         }
     }
 }

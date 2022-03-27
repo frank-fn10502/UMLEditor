@@ -11,6 +11,7 @@ public class Relation extends EditComponent {
     public Relation(Container c) {
         super(c);
         visable = false;
+        this.depth = 98;
     }
     public void setStartPoint(Point p){
         this.start = p;

@@ -13,11 +13,11 @@ public class UMLFrame extends JFrame {
         setFrameValue();
 
         // create sideBar
-        Rectangle loc_size = new Rectangle(10, 10, 100, 700);
+        Rectangle loc_size = new Rectangle(10, 10, 100, 670);
         this.sideBar = new SideBar(loc_size);
 
         // create EditArea
-        loc_size = new Rectangle(sideBar.getWidth() + sideBar.getX() + 10, 10, 1150, 700);
+        loc_size = new Rectangle(sideBar.getWidth() + sideBar.getX() + 10, 10, 1150, 670);
         this.editArea = new EditArea(loc_size);
 
         // create menubar
