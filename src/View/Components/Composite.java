@@ -6,7 +6,7 @@ import View.Components.base.Entity;
 import View.Components.base.UMLContainer;
 
 public class Composite extends UMLContainer {
-    List<Entity> entityList;
+
     boolean visable;
     int padding;
 
@@ -19,13 +19,12 @@ public class Composite extends UMLContainer {
         this.calBounds();
     }
 
-    public List<Entity> getEntityList(){
-        return this.entityList;
-    }
-
     void setEntityList(List<Entity> entityList) throws Exception {
         if (entityList.size() < 2) {
-            throw new Exception("Composite need more than 2 Entity");
+            if (entityList.size() == 1 && entityList.get(0) instanceof Composite) {
+
+            } else
+                throw new Exception("Composite need more than 2 baseObj");
         }
         this.entityList = entityList;
         for (Entity entity : this.entityList) {
