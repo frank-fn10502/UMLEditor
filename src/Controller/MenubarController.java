@@ -127,7 +127,7 @@ public class MenubarController {
             this.containerList.remove(this.root);
 
             List<UMLContainer> secContainerList = this.finAllSecendContainer(this.root);
-            this.root = secContainerList.size() == 1 ? this.containerList.get(0) : null;
+            this.root = secContainerList.size() == 1 ? secContainerList.get(0) : null;
             this.menubar.EnabledMethodUnGroupObj(this.root != null);
         });
     }
