@@ -8,6 +8,9 @@ import java.awt.*;
 import java.io.IOException;
 
 import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
+import javax.swing.*;
 
 public class UMLEditor {
     public static void main(String[] args) throws Exception {
@@ -55,6 +58,8 @@ public class UMLEditor {
         modeSelect.addSelectListener(changeObjName);
 
         UMLFrame frame = new UMLFrame();
+        frame.setTitle("UML Editor");
+
         // 顯示視窗
         frame.setVisible(true);
     }
